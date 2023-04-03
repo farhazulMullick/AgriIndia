@@ -6,7 +6,7 @@
     <data>
         <variable
             name="authViewModel"
-            type="com.project.farmingapp.viewmodel.AuthViewModel" />
+            type="com.project.farmingappss.viewmodel.AuthViewModel" />
     </data>
 
     <ScrollView

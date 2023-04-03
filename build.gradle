@@ -5,6 +5,7 @@ buildscript {
 
         google()
         jcenter()
+        mavenCentral()  // Maven Central repository
     }
     dependencies {
 
@@ -12,7 +13,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
-        classpath 'com.google.gms:google-services:4.3.4'
+        classpath 'com.google.gms:google-services:4.3.15'
         // in the individual module build.gradle files
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-alpha05"
     }
@@ -23,6 +24,7 @@ allprojects {
         maven { url 'https://jitpack.io' }
         google()
         jcenter()
+        mavenCentral()  // Maven Central repository
     }
 }
 
