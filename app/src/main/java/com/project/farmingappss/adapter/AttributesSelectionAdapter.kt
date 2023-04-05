@@ -12,7 +12,7 @@ import com.project.farmingappss.R
 import com.project.farmingappss.utilities.CellClickListener
 import kotlinx.android.synthetic.main.single_selection_attributes_ecomm.view.*
 
-class AttributesSelectionAdapter(var context: Context, var allData: List<Map<String, Any>>, private val cellClickListener: CellClickListener): RecyclerView.Adapter<AttributesSelectionAdapter.AttributesSelectionViewHolder>() {
+class AttributesSelectionAdapter(var context: Context, var allData: List<Map<String, Any>>, private val cellClickListener: CellClickListener<String>): RecyclerView.Adapter<AttributesSelectionAdapter.AttributesSelectionViewHolder>() {
     class AttributesSelectionViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
     }

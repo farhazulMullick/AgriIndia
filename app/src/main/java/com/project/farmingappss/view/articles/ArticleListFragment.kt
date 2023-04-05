@@ -28,7 +28,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ArticleListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ArticleListFragment : Fragment(), CellClickListener {
+class ArticleListFragment : Fragment(), CellClickListener<String> {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -99,14 +99,14 @@ class ArticleListFragment : Fragment(), CellClickListener {
 
 
 
-    override fun onCellClickListener(name: String) {
+    override fun onCellClickListener(data: String) {
         fruitFragment = FruitsFragment()
         val bundle = Bundle()
-        bundle.putString("name", name)
+        bundle.putString("name", data)
         fruitFragment.setArguments(bundle)
         val transaction = activity!!.supportFragmentManager
             .beginTransaction()
-            .replace(R.id.frame_layout, fruitFragment, name)
+            .replace(R.id.frame_layout, fruitFragment, data)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .setReorderingAllowed(true)
             .addToBackStack("name")

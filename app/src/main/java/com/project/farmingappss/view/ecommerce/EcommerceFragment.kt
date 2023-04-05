@@ -28,7 +28,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-class EcommerceFragment : Fragment(), CellClickListener {
+class EcommerceFragment : Fragment(), CellClickListener <String>{
     private lateinit var viewmodel: EcommViewModel
     private var adapter: EcommerceAdapter? = null
     lateinit var ecommerceItemFragment: EcommerceItemFragment
@@ -138,15 +138,15 @@ class EcommerceFragment : Fragment(), CellClickListener {
             }
     }
 
-    override fun onCellClickListener(name: String) {
+    override fun onCellClickListener(data: String) {
         ecommerceItemFragment = EcommerceItemFragment()
         val bundle = Bundle()
-        bundle.putString("name", name)
+        bundle.putString("name", data)
         ecommerceItemFragment.setArguments(bundle)
 
         val transaction = activity!!.supportFragmentManager
             .beginTransaction()
-            .replace(R.id.frame_layout, ecommerceItemFragment, name)
+            .replace(R.id.frame_layout, ecommerceItemFragment, data)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .setReorderingAllowed(true)
             .addToBackStack("ecommItem")

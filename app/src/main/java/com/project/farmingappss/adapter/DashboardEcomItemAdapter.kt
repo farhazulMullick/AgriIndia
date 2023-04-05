@@ -12,7 +12,7 @@ import com.project.farmingappss.utilities.CellClickListener
 import kotlinx.android.synthetic.main.single_dashboard_ecomm_item.view.*
 
 
-class DashboardEcomItemAdapter(var context: Context,val allData: List<DocumentSnapshot>, val itemsToShow: List<Int>, val cellClickListener: CellClickListener): RecyclerView.Adapter<DashboardEcomItemAdapter.DashboardEcomItemViewHolder>() {
+class DashboardEcomItemAdapter(var context: Context,val allData: List<DocumentSnapshot>, val itemsToShow: List<Int>, val cellClickListener: CellClickListener<String>): RecyclerView.Adapter<DashboardEcomItemAdapter.DashboardEcomItemViewHolder>() {
     class DashboardEcomItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
     }

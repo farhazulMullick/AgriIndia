@@ -32,16 +32,11 @@ class YojnaViewModel: ViewModel() {
             }
     }
 
-    fun getAllYojna(name: String){
-
+    fun getAllYojna(collectionName: String){
         if (message3.value.isNullOrEmpty()){
             firebaseDb = FirebaseFirestore.getInstance()
-            firebaseDb.collection(name).get().addOnSuccessListener {
-//            var message3 = MutableLiveData<DocumentSnapshot>()
-
+            firebaseDb.collection(collectionName).get().addOnSuccessListener {
                 message3.value = it.documents
-                Log.d("I'm called4", "Yes")
-//            Log.d("All articles", it.documents[1].data.toString())
             }
         }
 

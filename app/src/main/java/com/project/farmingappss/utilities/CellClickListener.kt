@@ -1,6 +1,8 @@
 package com.project.farmingappss.utilities
 
-interface CellClickListener {
-    fun onCellClickListener(name: String)
+import com.google.firebase.firestore.DocumentSnapshot
+
+interface CellClickListener<T> {
+    fun onCellClickListener(data: T)
 
 }

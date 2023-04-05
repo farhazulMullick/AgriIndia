@@ -17,7 +17,7 @@ import kotlin.collections.HashMap
 class MyOrdersAdapter(
     val context: MyOrdersFragment,
     val allData: HashMap<String, Object>,
-    val cellClickListener: CellClickListener,
+    val cellClickListener: CellClickListener<String>,
     val cartItemBuy: CartItemBuy
 ) : RecyclerView.Adapter<MyOrdersAdapter.MyOrdersViewHolder>() {
     class MyOrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

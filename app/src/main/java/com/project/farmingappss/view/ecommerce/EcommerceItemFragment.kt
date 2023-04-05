@@ -35,7 +35,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [EcommItemFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EcommerceItemFragment : Fragment(), CellClickListener {
+class EcommerceItemFragment : Fragment(), CellClickListener <String> {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private lateinit var viewmodel: EcommViewModel

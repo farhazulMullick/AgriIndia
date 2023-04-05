@@ -13,8 +13,12 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.project.farmingappss.R
 import com.project.farmingappss.utilities.CellClickListener
 
-class YojnaAdapter(val context: Context, val yojnaData: List<DocumentSnapshot>, private val cellClickListener: CellClickListener): RecyclerView.Adapter<YojnaAdapter.YojnaListviewHolder>() {
-    class YojnaListviewHolder(itemview: View):RecyclerView.ViewHolder(itemview) {
+class YojnaAdapter(
+    val context: Context,
+    private val yojnaData: ArrayList<DocumentSnapshot>,
+    private val cellClickListener: CellClickListener<DocumentSnapshot>
+) : RecyclerView.Adapter<YojnaAdapter.YojnaListviewHolder>() {
+    class YojnaListviewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         var yojnaName = itemView.findViewById<TextView>(R.id.yojnaTitleYojnaList)
         var yojnaImage = itemView.findViewById<ImageView>(R.id.yojnaImageYojnaList)
         var yojnaDate = itemView.findViewById<TextView>(R.id.yojnaDateYojnaList)
@@ -32,19 +36,22 @@ class YojnaAdapter(val context: Context, val yojnaData: List<DocumentSnapshot>, 
     }
 
     override fun onBindViewHolder(holder: YojnaListviewHolder, position: Int) {
-      val singleYojna=yojnaData[position]
+        val singleYojna = yojnaData[position]
 
         holder.yojnaName.text = singleYojna.data!!.get("title").toString()
-        holder.yojnaStatus.text = singleYojna.data!!.get("status").toString()
         holder.yojnaDate.text = singleYojna.data!!.get("launch").toString()
         val url = singleYojna.data!!.get("image").toString()
-        Glide.with(holder.itemView.context)
-            .load(url)
-            .into(holder.yojnaImage)
+        Glide.with(holder.itemView.context).load(url).into(holder.yojnaImage)
 
         holder.yojnaCard.setOnClickListener {
-            cellClickListener.onCellClickListener(singleYojna.data!!.get("title").toString())
+            cellClickListener.onCellClickListener(singleYojna)
         }
+    }
+
+    fun setData( newData: List<DocumentSnapshot> ){
+        yojnaData.clear()
+        yojnaData.addAll(newData)
+        notifyItemRangeInserted(0, itemCount)
     }
 
 

@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.DocumentSnapshot
 import com.project.farmingappss.R
 import com.project.farmingappss.adapter.YojnaAdapter
+import com.project.farmingappss.databinding.FragmentYojnaListBinding
 import com.project.farmingappss.utilities.CellClickListener
 import com.project.farmingappss.viewmodel.YojnaViewModel
 import kotlinx.android.synthetic.main.fragment_yojna_list.*
@@ -27,12 +30,14 @@ private const val ARG_PARAM2 = "param2"
  * Use the [YojnaListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class YojnaListFragment : Fragment(), CellClickListener {
+class YojnaListFragment : Fragment(), CellClickListener<DocumentSnapshot> {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var viewModel: YojnaViewModel
-    lateinit var Adapter: YojnaAdapter
+
+    val viewModel : YojnaViewModel by viewModels()
+    lateinit var yojnaAdapter: YojnaAdapter
+
     lateinit var yojnaFragment: YojnaFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,35 +45,41 @@ class YojnaListFragment : Fragment(), CellClickListener {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-       viewModel = ViewModelProviders.of(requireActivity())
-           .get<YojnaViewModel>(YojnaViewModel::class.java)
-
-       viewModel.getAllYojna("yojnas")
     }
+
+    private var _binding: FragmentYojnaListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentYojnaListBinding.inflate(layoutInflater, container, false)
 
-        viewModel.message3.observe(viewLifecycleOwner, Observer {
-            if (it.isEmpty()) return@Observer
-            Log.d("Art All Data", it[0].data.toString())
-
-
-            Adapter = YojnaAdapter(activity!!.applicationContext, it, this)
-            rcyclr_yojnaList.adapter = Adapter
-            rcyclr_yojnaList.layoutManager = LinearLayoutManager(activity!!.applicationContext)
-
-        })
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_yojna_list, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.title = "Krishi Yojna"
+        binding.setViewModelBindingData()
+        viewModel.getAllYojna("krishi_yojnas")
+
+    }
+
+    private fun FragmentYojnaListBinding. setViewModelBindingData () {
+        rcvYojna.apply {
+            adapter = run {
+                yojnaAdapter = YojnaAdapter(requireContext(), ArrayList(), this@YojnaListFragment)
+                yojnaAdapter
+            }
+        }
+
+        viewModel.message3.observe(viewLifecycleOwner, Observer {list ->
+            if (list.isEmpty()) return@Observer
+            yojnaAdapter.setData(list)
+        })
     }
 
     companion object {
@@ -90,18 +101,17 @@ class YojnaListFragment : Fragment(), CellClickListener {
                 }
             }
     }
-    override fun onCellClickListener(name: String) {
-       yojnaFragment = YojnaFragment()
-        val bundle = Bundle()
-        bundle.putString("name", name)
-        yojnaFragment.setArguments(bundle)
-        val transaction = activity!!.supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame_layout, yojnaFragment, name)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .setReorderingAllowed(true)
-            .addToBackStack("yojnaListFrag")
-            .commit()
+    override fun onCellClickListener(data: DocumentSnapshot) {
+//       yojnaFragment = YojnaFragment()
+//        val bundle = Bundle()
+//        yojnaFragment.setArguments(bundle)
+//        activity!!.supportFragmentManager
+//            .beginTransaction()
+//            .replace(R.id.frame_layout, yojnaFragment, YojnaFragment::class.java.simpleName)
+//            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//            .setReorderingAllowed(true)
+//            .addToBackStack(YojnaFragment::class.java.simpleName)
+//            .commitAllowingStateLoss()
     }
 
 }

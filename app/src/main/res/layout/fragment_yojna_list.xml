@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.yojna.YojnaListFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-    <TextView
-        android:layout_marginVertical="7dp"
-        android:id="@+id/YojnaListTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:text="Yojna" />
+    <data>
 
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/rcyclr_yojnaList"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/YojnaListTitle"
-          app:layout_constraintEnd_toEndOf="parent"
-          android:layout_margin="7dp"/>
-  </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.yojna.YojnaListFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/YojnaListTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="7dp"
+                android:text="Yojna"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_yojna"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="7dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/YojnaListTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

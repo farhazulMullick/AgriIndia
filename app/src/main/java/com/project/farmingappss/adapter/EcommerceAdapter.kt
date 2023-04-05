@@ -13,7 +13,7 @@ import com.project.farmingappss.R
 import com.project.farmingappss.utilities.CellClickListener
 import kotlinx.android.synthetic.main.single_ecomm_item.view.*
 
-class EcommerceAdapter(val context: Context, val ecommtListData : List<DocumentSnapshot>, private val cellClickListener: CellClickListener):RecyclerView.Adapter<EcommerceAdapter.EcommercceViewModel>() {
+class EcommerceAdapter(val context: Context, val ecommtListData : List<DocumentSnapshot>, private val cellClickListener: CellClickListener<String>):RecyclerView.Adapter<EcommerceAdapter.EcommercceViewModel>() {
 
     lateinit var firebaseAuth: FirebaseAuth
     lateinit var firebaseFirestore: FirebaseFirestore

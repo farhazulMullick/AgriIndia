@@ -12,7 +12,7 @@ import com.project.farmingappss.R
 import com.project.farmingappss.utilities.CellClickListener
 import kotlinx.android.synthetic.main.user_profile_posts_single.view.*
 
-class PostListUserProfileAdapter(val context: Context, var listData: ArrayList<DocumentSnapshot>, private val cellClickListener: CellClickListener) : RecyclerView.Adapter<PostListUserProfileAdapter.PostListUserProfileViewHolder>() {
+class PostListUserProfileAdapter(val context: Context, var listData: ArrayList<DocumentSnapshot>, private val cellClickListener: CellClickListener<String>) : RecyclerView.Adapter<PostListUserProfileAdapter.PostListUserProfileViewHolder>() {
     class PostListUserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
     }

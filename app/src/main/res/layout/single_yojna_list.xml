@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="7dp">
+    android:layout_margin="7dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/singlelistyojnacard"
@@ -11,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_margin="3dp"
         app:cardElevation="5dp"
+        app:cardCornerRadius="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="14dp"
                 android:lineSpacingExtra="3dp"
-                android:text="National Mission For Sustainable Agriculture"
+                tools:text="National Mission For Sustainable Agriculture"
                 android:textColor="@color/fontColor"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@id/yojnaImageYojnaList"
@@ -38,6 +40,7 @@
                 android:id="@+id/yojnaDateYojnaList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
                 android:text="21 August 2021"
                 app:layout_constraintBottom_toBottomOf="@id/yojnaImageYojnaList"
                 app:layout_constraintStart_toStartOf="@id/yojnaTitleYojnaList" />
@@ -62,7 +65,7 @@
                 android:layout_marginHorizontal="14dp"
                 android:text="Active"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/yojnaDateYojnaList"
                 app:layout_constraintEnd_toStartOf="@id/yojnaImageYojnaList" />

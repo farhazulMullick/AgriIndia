@@ -13,7 +13,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.project.farmingappss.R
 import com.project.farmingappss.utilities.CellClickListener
 
-class ArticleListAdapter(val context: Context, val articleListData: List<DocumentSnapshot>, private val cellClickListener: CellClickListener): RecyclerView.Adapter<ArticleListAdapter.ArticleListViewholder>() {
+class ArticleListAdapter(val context: Context, val articleListData: List<DocumentSnapshot>, private val cellClickListener: CellClickListener<String>): RecyclerView.Adapter<ArticleListAdapter.ArticleListViewholder>() {
     class ArticleListViewholder(itemView: View): RecyclerView.ViewHolder(itemView){
         var articleName = itemView.findViewById<TextView>(R.id.descTextxArticleListFrag)
         var articleImage = itemView.findViewById<ImageView>(R.id.imageArticleListFrag)

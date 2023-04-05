@@ -32,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MyOrdersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MyOrdersFragment : Fragment(), CellClickListener, CartItemBuy {
+class MyOrdersFragment : Fragment(), CellClickListener <String>, CartItemBuy {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
