@@ -7,10 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.project.farmingappss.R
 import com.project.farmingappss.utilities.YOJNA_URL
 import com.project.farmingappss.viewmodel.YojnaViewModel
@@ -23,21 +19,17 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [YojnaFragment.newInstance] factory method to
+ * Use the [WebViewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class YojnaFragment : Fragment() {
+class WebViewFragment : Fragment() {
 
     private var param1: String? = null
     lateinit var yojnaViewModel: YojnaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-        }
-        val tag = this.tag.toString()
-        Log.d("YojnaFragment", this.tag.toString())
+        Log.d(WebViewFragment::class.java.name, this.tag.toString())
     }
 
     override fun onCreateView(
@@ -50,7 +42,7 @@ class YojnaFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(url: String) =
-            YojnaFragment().apply {
+            WebViewFragment().apply {
                 arguments = Bundle().apply {
                     putString(YOJNA_URL, url)
                 }

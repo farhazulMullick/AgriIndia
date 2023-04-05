@@ -1,7 +1,6 @@
 package com.project.farmingappss.view.yojna
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.DocumentSnapshot
 import com.project.farmingappss.R
 import com.project.farmingappss.adapter.YojnaAdapter
 import com.project.farmingappss.databinding.FragmentYojnaListBinding
 import com.project.farmingappss.utilities.CellClickListener
-import com.project.farmingappss.utilities.YOJNA_URL
 import com.project.farmingappss.viewmodel.YojnaViewModel
-import kotlinx.android.synthetic.main.fragment_yojna_list.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,7 +34,7 @@ class YojnaListFragment : Fragment(), CellClickListener<DocumentSnapshot> {
     val viewModel : YojnaViewModel by viewModels()
     lateinit var yojnaAdapter: YojnaAdapter
 
-    lateinit var yojnaFragment: YojnaFragment
+    lateinit var webViewFragment: WebViewFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -105,14 +100,14 @@ class YojnaListFragment : Fragment(), CellClickListener<DocumentSnapshot> {
     override fun onCellClickListener(data: DocumentSnapshot) {
         if (data.get("link") == null || data.data == null) return
 
-        YojnaFragment.newInstance(data.data!!["link"].toString())
-        activity!!.supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame_layout, yojnaFragment, YojnaFragment::class.java.simpleName)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .setReorderingAllowed(true)
-            .addToBackStack(YojnaFragment::class.java.simpleName)
-            .commitAllowingStateLoss()
+        webViewFragment = WebViewFragment.newInstance(data.data!!["link"].toString())
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.frame_layout, webViewFragment, WebViewFragment::class.java.simpleName)
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            ?.setReorderingAllowed(true)
+            ?.addToBackStack(WebViewFragment::class.java.simpleName)
+            ?.commitAllowingStateLoss()
     }
 
 }

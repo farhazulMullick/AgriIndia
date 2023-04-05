@@ -60,6 +60,10 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_weather.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.util.*
 
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, com.google.android.gms.location.LocationListener  {
@@ -89,6 +93,8 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     var userName = ""
     var data: WeatherRootList? = null
     var firstTime: Boolean? = null
+
+    private var job: Job? = null
 
     private var REQUEST_LOCATION_CODE = 101
     private var mGoogleApiClient: GoogleApiClient? = null
@@ -426,28 +432,31 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     override fun onClick(v: View?) {
-        if (!checkGPSEnabled()) {
-            return
+
+        job = GlobalScope.launch (Dispatchers.IO){
+            if (!checkGPSEnabled()) {
+                return@launch
+            }
+
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(this@DashboardActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    //Location Permission already granted
+                    getLocation();
+                } else {
+                    //Request Location Permission
+                    checkLocationPermission()
+                }
+            } else {
+                getLocation();
+            }
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                //Location Permission already granted
-                getLocation();
-            } else {
-                //Request Location Permission
-                checkLocationPermission()
-            }
-        } else {
-            getLocation();
-        }
     }
     @SuppressLint("MissingPermission")
     private fun getLocation() {
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (mLocation == null) {
-
             startLocationUpdates();
         }
         if (mLocation != null) {
@@ -477,6 +486,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
+        if (mGoogleApiClient?.isConnected?.not() == true) return
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this)
     }
     override fun onLocationChanged(p0: Location?) {
