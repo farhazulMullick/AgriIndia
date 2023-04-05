@@ -447,6 +447,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (mLocation == null) {
+
             startLocationUpdates();
         }
         if (mLocation != null) {

@@ -71,6 +71,7 @@ dependencies {
 
     // ViewModel and LiveData
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 
     //Location
     implementation 'com.google.android.gms:play-services-location:18.0.0'

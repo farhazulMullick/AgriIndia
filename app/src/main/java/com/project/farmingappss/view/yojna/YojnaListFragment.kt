@@ -17,6 +17,7 @@ import com.project.farmingappss.R
 import com.project.farmingappss.adapter.YojnaAdapter
 import com.project.farmingappss.databinding.FragmentYojnaListBinding
 import com.project.farmingappss.utilities.CellClickListener
+import com.project.farmingappss.utilities.YOJNA_URL
 import com.project.farmingappss.viewmodel.YojnaViewModel
 import kotlinx.android.synthetic.main.fragment_yojna_list.*
 
@@ -102,11 +103,9 @@ class YojnaListFragment : Fragment(), CellClickListener<DocumentSnapshot> {
             }
     }
     override fun onCellClickListener(data: DocumentSnapshot) {
-        yojnaFragment = YojnaFragment()
-        val bundle = Bundle()
-        val url = data.data!!.get("link").toString()
-        bundle.putString("yojnaUrl",url)
-        yojnaFragment.setArguments(bundle)
+        if (data.get("link") == null || data.data == null) return
+
+        YojnaFragment.newInstance(data.data!!["link"].toString())
         activity!!.supportFragmentManager
             .beginTransaction()
             .replace(R.id.frame_layout, yojnaFragment, YojnaFragment::class.java.simpleName)

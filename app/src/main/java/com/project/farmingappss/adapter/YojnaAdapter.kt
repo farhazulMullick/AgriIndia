@@ -54,5 +54,4 @@ class YojnaAdapter(
         notifyItemRangeInserted(0, itemCount)
     }
 
-
 }
