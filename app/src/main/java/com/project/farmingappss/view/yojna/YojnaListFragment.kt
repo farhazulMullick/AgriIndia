@@ -102,16 +102,18 @@ class YojnaListFragment : Fragment(), CellClickListener<DocumentSnapshot> {
             }
     }
     override fun onCellClickListener(data: DocumentSnapshot) {
-//       yojnaFragment = YojnaFragment()
-//        val bundle = Bundle()
-//        yojnaFragment.setArguments(bundle)
-//        activity!!.supportFragmentManager
-//            .beginTransaction()
-//            .replace(R.id.frame_layout, yojnaFragment, YojnaFragment::class.java.simpleName)
-//            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//            .setReorderingAllowed(true)
-//            .addToBackStack(YojnaFragment::class.java.simpleName)
-//            .commitAllowingStateLoss()
+        yojnaFragment = YojnaFragment()
+        val bundle = Bundle()
+        val url = data.data!!.get("link").toString()
+        bundle.putString("yojnaUrl",url)
+        yojnaFragment.setArguments(bundle)
+        activity!!.supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame_layout, yojnaFragment, YojnaFragment::class.java.simpleName)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .setReorderingAllowed(true)
+            .addToBackStack(YojnaFragment::class.java.simpleName)
+            .commitAllowingStateLoss()
     }
 
 }
