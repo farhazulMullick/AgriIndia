@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -39,10 +40,7 @@ class YojnaFragment : Fragment() {
         val tag = this.tag.toString()
         Log.d("YojnaFragment", this.tag.toString())
 
-        yojnaViewModel =
-            ViewModelProviders.of(requireActivity()).get<YojnaViewModel>(YojnaViewModel::class.java)
 
-        yojnaViewModel.getYojna(this.tag.toString())
     }
 
     override fun onCreateView(
@@ -76,42 +74,12 @@ class YojnaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar?.title = "Krishi Yojna"
-        progressYojna.visibility = View.VISIBLE
-
-        yojnaViewModel.msg.observe(viewLifecycleOwner, Observer {
-            yojnaTitle.text = it.get("title").toString()
-            yojnaDesc.text = it.get("description").toString()
-            yojnaDate.text = it.get("launch").toString()
-            yojnaLaunchedBy.text = it.get("headedBy").toString()
-            yojnaBudget.text = it.get("budget").toString()
-            val eligibility: ArrayList<String> = it.get("eligibility") as ArrayList<String>
-            val documents: ArrayList<String> = it.get("documents") as ArrayList<String>
-            val objectives: ArrayList<String> = it.get("objective") as ArrayList<String>
-
-            yojnaEligibility.text = ""
-            yojnaDocumentsRequired.text = ""
-            yojnaObjectives.text = ""
-
-            for (i in 0..(eligibility.size - 1)) {
-                yojnaEligibility.text =
-                    yojnaEligibility.text.toString() + (i + 1).toString() + ". " + eligibility[i].toString() + "\n"
+        arguments?.apply {
+            val yojnaUrl = this.getString("yojnaUrl")
+            yojnaWebView.apply {
+                webViewClient = WebViewClient()
+                loadUrl(yojnaUrl)
             }
-
-            for (i in 0..(documents.size - 1)) {
-                yojnaDocumentsRequired.text =
-                    yojnaDocumentsRequired.text.toString() + (i + 1).toString() + ". " + documents[i].toString() + "\n"
-            }
-
-            for (i in 0..(objectives.size - 1)) {
-                yojnaObjectives.text =
-                    yojnaObjectives.text.toString() + (i + 1).toString() + ". " + objectives[i].toString() + "\n"
-            }
-
-            yojnaWebsite.text = it.get("website").toString()
-            Glide.with(this).load(it.get("image").toString()).into(yojnaImage)
-            progressYojna.visibility = View.GONE
-        })
+        }
     }
 }
