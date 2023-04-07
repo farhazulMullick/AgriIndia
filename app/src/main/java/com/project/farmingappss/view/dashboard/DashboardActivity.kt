@@ -572,9 +572,11 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     override fun onStop() {
-        super.onStop()
+        job?.cancel()
         if (mGoogleApiClient!!.isConnected()) {
             mGoogleApiClient!!.disconnect()
         }
+
+        super.onStop()
     }
 }
