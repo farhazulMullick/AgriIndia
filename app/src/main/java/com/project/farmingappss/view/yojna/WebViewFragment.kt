@@ -56,7 +56,7 @@ class WebViewFragment : Fragment() {
             val yojnaUrl = this.getString(YOJNA_URL)
             yojnaWebView.apply {
                 webViewClient = WebViewClient()
-                loadUrl(yojnaUrl)
+                loadUrl(yojnaUrl!!)
             }
         }
     }

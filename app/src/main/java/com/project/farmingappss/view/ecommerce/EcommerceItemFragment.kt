@@ -53,7 +53,7 @@ class EcommerceItemFragment : Fragment(), CellClickListener <String> {
         }
         viewmodel = ViewModelProviders.of(requireActivity())
             .get<EcommViewModel>(EcommViewModel::class.java)
-        Toast.makeText(activity!!.applicationContext, "Something" + tag, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Something" + tag, Toast.LENGTH_SHORT).show()
 
         realtimeDatabase = FirebaseDatabase.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()

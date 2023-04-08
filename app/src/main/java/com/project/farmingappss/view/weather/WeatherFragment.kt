@@ -59,7 +59,7 @@ class WeatherFragment : Fragment(), WeatherListener {
 
         val bundle = this.arguments
         if (bundle != null) {
-            Log.d("WeatherFrag Bundle", bundle.getString("key"))
+            Log.d("WeatherFrag Bundle", bundle.getString("key").toString())
         }
     }
 
