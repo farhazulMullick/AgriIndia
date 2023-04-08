@@ -414,7 +414,7 @@ class UserFragment : Fragment(), CellClickListener <String>{
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.liveData3.observe(this, Observer {
+        viewModel.liveData3.observe(viewLifecycleOwner, Observer {
             Log.d("All Posts", it.toString())
             val adapter = PostListUserProfileAdapter(activity!!.applicationContext, it, this)
             userProfilePostsRecycler.adapter = adapter

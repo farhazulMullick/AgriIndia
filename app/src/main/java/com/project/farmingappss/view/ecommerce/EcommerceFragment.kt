@@ -86,13 +86,15 @@ class EcommerceFragment : Fragment(), CellClickListener <String>{
 
             when (checkedId) {
                 R.id.chip1 -> {
-                    viewmodel.loadAllEcommItems().observe(viewLifecycleOwner, Observer {
-                        ecommrcyclr.adapter =
-                            EcommerceAdapter(activity!!.applicationContext, it, this)
+                    viewmodel.loadAllEcommItems().observe(viewLifecycleOwner, Observer {ecomList ->
+                            context?.let{
+                                ecommrcyclr.adapter = EcommerceAdapter(it, ecomList, this)
+                            }
                     })
                 }
                 R.id.chip2 -> {
                     viewmodel.getSpecificCategoryItems("fertilizer")
+
                         .observe(viewLifecycleOwner, Observer {
                             ecommrcyclr.adapter =
                                 EcommerceAdapter(activity!!.applicationContext, it, this)
@@ -144,7 +146,7 @@ class EcommerceFragment : Fragment(), CellClickListener <String>{
         bundle.putString("name", data)
         ecommerceItemFragment.setArguments(bundle)
 
-        val transaction = activity!!.supportFragmentManager
+        activity!!.supportFragmentManager
             .beginTransaction()
             .replace(R.id.frame_layout, ecommerceItemFragment, data)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
