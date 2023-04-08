@@ -32,7 +32,7 @@ class EcommViewModel : ViewModel() {
 
             }
             .addOnFailureListener {
-                Log.d("ecommviewmodel", it.message)
+                Log.d("ecommviewmodel", it.message!!)
             }
         return ecommLiveData
     }
@@ -50,7 +50,7 @@ class EcommViewModel : ViewModel() {
 
             }
             .addOnFailureListener {
-                Log.d("ecommviewmodel", it.message)
+                Log.d("ecommviewmodel", it.message!!)
             }
 
     }

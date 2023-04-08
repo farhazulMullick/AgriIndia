@@ -1,28 +1,27 @@
 package com.project.farmingappss.adapter
 
+//import com.google.firebase.auth.FirebaseAuth
 import android.content.Context
-import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.project.farmingappss.R
 import kotlinx.android.synthetic.main.post_with_image_sm.view.*
 
 
 class SMPostListAdapter(val context: Context, val postListData : List<DocumentSnapshot>): RecyclerView.Adapter<SMPostListAdapter.SMPostListViewModel>() {
 
-    lateinit var firebaseAuth: FirebaseAuth
-    lateinit var firebaseFirestore: FirebaseFirestore
+//    lateinit var firebaseAuth: FirebaseAuth
+    private val db = Firebase.firestore
+    private val auth = Firebase.auth
     class SMPostListViewModel(itemView: View): RecyclerView.ViewHolder(itemView){
 
     }
@@ -41,16 +40,16 @@ class SMPostListAdapter(val context: Context, val postListData : List<DocumentSn
 
 
 
-        holder.itemView.userNamePostSM.text = currentPost.get("name").toString()
+        holder.itemView.userNamePostSM.text = currentPost.get("userName").toString()
         holder.itemView.userPostTitleValue.text = currentPost.get("title").toString()
         holder.itemView.userPostDescValue.text = currentPost.get("description").toString()
-        holder.itemView.userPostUploadTime.text = DateUtils.getRelativeTimeSpanString(currentPost.get("timeStamp") as Long)
+//        holder.itemView.userPostUploadTime.text = DateUtils.getRelativeTimeSpanString(currentPost.get("timeStamp") as Long)
 
-        val imageUrl = currentPost.get("imageUrl")
-        Log.d("Post without Image1", imageUrl.toString())
+        val imageList = currentPost.get("images") as List<String>
+//        Log.d("Post without Image1", imageUrl.toString())
 
 
-        val uploadType = currentPost.get("uploadType").toString()
+        val uploadType = "image"
         if (uploadType == "video"){
 
 //            val mediaController: MediaController = MediaController(context.applicationContext)
@@ -74,40 +73,41 @@ class SMPostListAdapter(val context: Context, val postListData : List<DocumentSn
 
             // Web View
 
-            val webSet: WebSettings = holder.itemView.postVideoSM.settings
-            webSet.javaScriptEnabled = true
-            webSet.loadWithOverviewMode = true
-            webSet.useWideViewPort = true
+//            val webSet: WebSettings = holder.itemView.postVideoSM.settings
+//            webSet.javaScriptEnabled = true
+//            webSet.loadWithOverviewMode = true
+//            webSet.useWideViewPort = true
 
 
-            holder.itemView.postVideoSM.setWebViewClient(object : WebViewClient() {
-                // autoplay when finished loading via javascript injection
-                override fun onPageFinished(view: WebView, url: String) {
-//                    holder.itemView.postVideoSM.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()")
-                }
-            })
+//            holder.itemView.postVideoSM.setWebViewClient(object : WebViewClient() {
+//                // autoplay when finished loading via javascript injection
+//                override fun onPageFinished(view: WebView, url: String) {
+////                    holder.itemView.postVideoSM.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()")
+//                }
+//            })
 
 
-            holder.itemView.postVideoSM.loadUrl(currentPost.get("imageUrl").toString())
+//            holder.itemView.postVideoSM.loadUrl(currentPost.get("imageUrl").toString())
 //            holder.itemView.postVideoSM.stopLoading()
             holder.itemView.postImageSM.visibility = View.GONE
-            holder.itemView.postVideoSM.visibility = View.VISIBLE
+//            holder.itemView.postVideoSM.visibility = View.VISIBLE
 
 
         } else if (uploadType == "image"){
-            Glide.with(context).load(currentPost.get("imageUrl")).into(holder.itemView.postImageSM)
-            holder.itemView.postVideoSM.visibility = View.GONE
+
+            Glide.with(context).load(imageList[0]).into(holder.itemView.postImageSM)
+//            holder.itemView.postVideoSM.visibility = View.GONE
 
             holder.itemView.postImageSM.visibility = View.VISIBLE
             Log.d("Upload Type 2 ", uploadType)
         }else if (uploadType.isEmpty() ){
-            Log.d("Post without Image2", imageUrl.toString())
+//            Log.d("Post without Image2", imageUrl.toString())
             holder.itemView.postImageSM.visibility = View.GONE
-            holder.itemView.postVideoSM.visibility = View.GONE
+//            holder.itemView.postVideoSM.visibility = View.GONE
             Log.d("Upload Type 3 ", uploadType)
         }
 
-        firebaseAuth = FirebaseAuth.getInstance()
+//        firebaseAuth = FirebaseAuth.getInstance()
 
         holder.itemView.userProfileImageCard.animation = AnimationUtils.loadAnimation(context, R.anim.fade_transition)
         holder.itemView.post_container.animation = AnimationUtils.loadAnimation(context, R.anim.fade_transition)
@@ -121,13 +121,13 @@ class SMPostListAdapter(val context: Context, val postListData : List<DocumentSn
 
 
 
-        firebaseFirestore = FirebaseFirestore.getInstance()
-        firebaseFirestore.collection("users").document("${currentPost.get("userID")}").get()
-            .addOnSuccessListener {
-                val profileImage = it.get("profileImage").toString()
-                if (!profileImage.isNullOrEmpty()){
-                    Glide.with(context).load(it.get("profileImage").toString()).into(holder.itemView.userProfileImagePost)
-                }
-            }
+//        firebaseFirestore = FirebaseFirestore.getInstance()
+//        firebaseFirestore.collection("Posts").document("${currentPost.get("userID")}").get()
+//            .addOnSuccessListener {
+//                val profileImage = it.get("profileImage").toString()
+//                if (!profileImage.isNullOrEmpty()){
+//                    Glide.with(context).load(it.get("profileImage").toString()).into(holder.itemView.userProfileImagePost)
+//                }
+//            }
     }
 }

@@ -48,7 +48,8 @@ import com.project.farmingappss.view.articles.ArticleListFragment
 import com.project.farmingappss.view.auth.LoginActivity
 import com.project.farmingappss.view.ecommerce.*
 import com.project.farmingappss.view.introscreen.IntroActivity
-import com.project.farmingappss.view.socialmedia.SMCreatePostFragment
+import com.project.farmingappss.view.socialmedia.SMPostAddingActivity
+//import com.project.farmingappss.view.socialmedia.SMCreatePostFragment
 import com.project.farmingappss.view.socialmedia.SocialMediaPostsFragment
 import com.project.farmingappss.view.user.UserFragment
 import com.project.farmingappss.view.weather.WeatherFragment
@@ -81,7 +82,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var myOrdersFragment: MyOrdersFragment
     lateinit var userFragment: UserFragment
     lateinit var socialMediaPostFragment: SocialMediaPostsFragment
-    lateinit var smCreatePostFragment: SMCreatePostFragment
+//    lateinit var smCreatePostFragment: SMCreatePostFragment
     private lateinit var viewModel: UserDataViewModel
     private lateinit var viewModel2: UserProfilePostsViewModel
     private lateinit var weatherViewModel: WeatherViewModel
@@ -275,7 +276,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             something.navbarUserEmail.text = firebaseAuth.currentUser!!.email
             Glide.with(this).load(it.get("profileImage")).into(something.navbarUserImage)
 
-            Log.d("User Data from VM", it.getString("name"))
+//            Log.d("User Data from VM", it.getString("name"))
 
             something.navBarUserPostCount.text = "Posts Count: " + posts.size.toString()
         })
@@ -330,14 +331,16 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     .commit()
             }
             R.id.miItem3 ->{
-                smCreatePostFragment = SMCreatePostFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, smCreatePostFragment, "createPostFrag")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .setReorderingAllowed(true)
-                    .addToBackStack("createPostFrag")
-                    .commit()
+                val intent = Intent(this,SMPostAddingActivity::class.java)
+                startActivity(intent)
+//                smCreatePostFragment = SMCreatePostFragment()
+//                supportFragmentManager
+//                    .beginTransaction()
+//                    .replace(R.id.frame_layout, smCreatePostFragment, "createPostFrag")
+//                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                    .setReorderingAllowed(true)
+//                    .addToBackStack("createPostFrag")
+//                    .commit()
             }
             R.id.miItem4 -> {
                 socialMediaPostFragment = SocialMediaPostsFragment()
@@ -465,7 +468,8 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             val coords = mutableListOf<String>()
             val geocoder = Geocoder(this, Locale.getDefault())
-            val addresses: List<Address> = geocoder.getFromLocation(mLocation!!.latitude, mLocation!!.longitude, 1)
+            val addresses: List<Address> =
+                geocoder.getFromLocation(mLocation!!.latitude, mLocation!!.longitude, 1) as List<Address>
 
             coords.add(mLocation!!.latitude.toString())
             coords.add(mLocation!!.longitude.toString())

@@ -42,7 +42,7 @@ class AuthRepository {
                 data.value = "Failure"
             }
         }.addOnFailureListener {
-            Log.d("AuthRepo", it.message)
+            Log.d("AuthRepo", it.message!!)
             data.value = it.message
         }
         return data
@@ -107,7 +107,7 @@ class AuthRepository {
             }
 
         }.addOnFailureListener {
-            Log.d("AuthRepo", it.message)
+            Log.d("AuthRepo", it.message!!)
             data.value = it.message
         }
         return data

@@ -21,13 +21,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    compileSdkVersion 29
+    compileSdkVersion 33
     buildToolsVersion "29.0.2"
 
     defaultConfig {
         applicationId "com.project.farmingappss"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -96,6 +96,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.1.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.0'
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -120,6 +122,12 @@ dependencies {
 
     //RazorPay
     implementation 'com.razorpay:checkout:1.5.16'
+
+    def lifecycle_version = "2.5.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    //Coroutines for firebase
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1'
 
 
 }
