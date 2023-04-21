@@ -273,7 +273,8 @@ class EcommerceItemFragment : Fragment(), CellClickListener <String> {
                 it.putExtra("productId",currentItemId.toString())
                 it.putExtra("itemCost",productPrice[1].toString())
                 it.putExtra("quantity", quantityCountEcomm.text.toString())
-                it.putExtra("deliveryCost", deliverycost.text.toString())
+                if (deliverycost.text.isNullOrEmpty().not())
+                    it.putExtra("deliveryCost", deliverycost.text.toString())
                 startActivity(it)
             }
 

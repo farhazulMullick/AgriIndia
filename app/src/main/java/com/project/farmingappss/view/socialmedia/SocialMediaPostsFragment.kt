@@ -82,6 +82,7 @@ class SocialMediaPostsFragment : Fragment() {
 
         firebaseFirestore.collection("posts").orderBy("timeStamp", Query.Direction.DESCENDING).get()
             .addOnSuccessListener {
+                if (it.isEmpty) return@addOnSuccessListener
                 Log.d("Posts data", it.documents.toString())
                 adapter = SMPostListAdapter(activity!!.applicationContext, it.documents)
                 postsRecycler.adapter = adapter
