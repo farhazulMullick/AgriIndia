@@ -134,8 +134,21 @@ class dashboardFragment : Fragment(), CellClickListener<String> {
                 }
             })
 
+        cat1.setOnClickListener {
 
-        cat4.setOnClickListener {
+            articleListFragment = ArticleListFragment()
+            val transaction = activity!!.supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frame_layout, articleListFragment, "articlesListFrag")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .setReorderingAllowed(true)
+                .addToBackStack("articlesListFrag")
+                .commit()
+
+        }
+
+
+        cat3.setOnClickListener {
             yojnaListFragment = YojnaListFragment()
             val transaction = activity!!.supportFragmentManager
                 .beginTransaction()
@@ -146,16 +159,16 @@ class dashboardFragment : Fragment(), CellClickListener<String> {
                 .commit()
         }
 
-        cat5.setOnClickListener {
-            articleListFragment = ArticleListFragment()
-            val transaction = activity!!.supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frame_layout, articleListFragment, "articlesListFrag")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .setReorderingAllowed(true)
-                .addToBackStack("articlesListFrag")
-                .commit()
-        }
+//        cat5.setOnClickListener {
+//            articleListFragment = ArticleListFragment()
+//            val transaction = activity!!.supportFragmentManager
+//                .beginTransaction()
+//                .replace(R.id.frame_layout, articleListFragment, "articlesListFrag")
+//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                .setReorderingAllowed(true)
+//                .addToBackStack("articlesListFrag")
+//                .commit()
+//        }
     }
 
     companion object {
