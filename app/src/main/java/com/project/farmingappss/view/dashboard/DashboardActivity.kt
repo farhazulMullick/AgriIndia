@@ -257,7 +257,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
 
         viewModel.userliveData.observe(this, Observer {
-
+            if (!it.exists())return@Observer
             val something = navView.getHeaderView(0);
             val posts = it.get("posts") as List<String>
             val city = it.get("city")
