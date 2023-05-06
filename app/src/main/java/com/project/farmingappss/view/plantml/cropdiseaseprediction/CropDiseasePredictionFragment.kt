@@ -3,13 +3,20 @@ package com.project.farmingappss.view.plantml.cropdiseaseprediction
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.project.farmingappss.R
 import com.project.farmingappss.databinding.FragmentCropDiseasePredictionBinding
 import com.project.farmingappss.utilities.CAMERA_REQUEST
+import com.project.farmingappss.view.plantml.adapter.PagerAdapter
+import kotlinx.android.synthetic.main.layout_perst_bttm_sheet_crop.tab_layout
+import kotlinx.android.synthetic.main.layout_perst_bttm_sheet_crop.view_pager
 
 /**
  * A simple [Fragment] subclass.
@@ -20,6 +27,7 @@ class CropDiseasePredictionFragment : Fragment() {
 
     private var _binding: FragmentCropDiseasePredictionBinding? = null
     private val binding get() = _binding!!
+    private var sheetBehavior: BottomSheetBehavior<*>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +51,27 @@ class CropDiseasePredictionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             CAMERA_REQUEST -> {
-
+                makeApiCalls()
             }
         }
+    }
+
+    private fun makeApiCalls () {
+        setViewPager()
+    }
+
+    private fun setViewPager() {
+        val list = listOf<Fragment>(
+
+        )
+
+        PagerAdapter(list, childFragmentManager)
     }
 
 
