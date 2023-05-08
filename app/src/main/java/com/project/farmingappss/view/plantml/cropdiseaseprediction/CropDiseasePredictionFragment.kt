@@ -3,20 +3,21 @@ package com.project.farmingappss.view.plantml.cropdiseaseprediction
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Layout
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.project.farmingappss.R
 import com.project.farmingappss.databinding.FragmentCropDiseasePredictionBinding
+import com.project.farmingappss.databinding.LayoutPerstBttmSheetCropBinding
 import com.project.farmingappss.utilities.CAMERA_REQUEST
+import com.project.farmingappss.utilities.Empty
 import com.project.farmingappss.view.plantml.adapter.PagerAdapter
-import kotlinx.android.synthetic.main.layout_perst_bttm_sheet_crop.tab_layout
-import kotlinx.android.synthetic.main.layout_perst_bttm_sheet_crop.view_pager
+import com.project.farmingappss.view.plantml.common.AboutFragment
+import com.project.farmingappss.view.plantml.common.DiseaseFragment
+import com.project.farmingappss.view.plantml.common.Fertilizer
 
 /**
  * A simple [Fragment] subclass.
@@ -26,12 +27,18 @@ import kotlinx.android.synthetic.main.layout_perst_bttm_sheet_crop.view_pager
 class CropDiseasePredictionFragment : Fragment() {
 
     private var _binding: FragmentCropDiseasePredictionBinding? = null
+    private var binding2 :LayoutPerstBttmSheetCropBinding? = null
     private val binding get() = _binding!!
-    private var sheetBehavior: BottomSheetBehavior<*>? = null
+
+    private val viewModel by viewModels<DiseasePredictionViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        startActivityForResult()
+    }
+
+    private fun startActivityForResult (){
         activity?.run {
             startActivityForResult(
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
@@ -51,6 +58,10 @@ class CropDiseasePredictionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.ivCapture .setOnClickListener {
+            startActivityForResult()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -68,10 +79,21 @@ class CropDiseasePredictionFragment : Fragment() {
 
     private fun setViewPager() {
         val list = listOf<Fragment>(
-
+            DiseaseFragment.newInstance(String.Empty, String.Empty),
+            Fertilizer.newInstance(String.Empty, String.Empty),
+            AboutFragment.newInstance(String.Empty,String.Empty)
         )
 
-        PagerAdapter(list, childFragmentManager)
+        val includedView =  binding.root.findViewById<View>(R.id.bottom_sheet) ?: return
+
+        val bind = LayoutPerstBttmSheetCropBinding.bind(includedView)
+
+        bind.pager.adapter = PagerAdapter(list, childFragmentManager)
+
+        bind.tabLayout
+            .setupWithViewPager(bind.pager)
+
+
     }
 
 

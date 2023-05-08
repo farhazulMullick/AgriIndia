@@ -1,4 +1,7 @@
 package com.project.farmingappss.view.plantml.cropprediction
 
-class CropPredictionViewModel {
+import androidx.lifecycle.ViewModel
+
+class CropPredictionViewModel : ViewModel() {
+
 }
