@@ -25,26 +25,7 @@
             app:tabGravity="center"
             app:tabMode="auto"
             app:tabTextAppearance="@style/MyCustomTextAppearance"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/disease"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Diseases" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/fertilizer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fertilizers" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/about"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="About" />
-        </com.google.android.material.tabs.TabLayout>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"

@@ -13,6 +13,7 @@
     <color name="secondary3">#c6dabf</color>
     <color name="colorThird">#fc7557</color>
     <color name="greenDark">#359701</color>
+    <color name="black_03E1E1E1">#03E1E1E1</color>
 
 <color name="chip">
     <selector xmlns:android="http://schemas.android.com/apk/res/android">

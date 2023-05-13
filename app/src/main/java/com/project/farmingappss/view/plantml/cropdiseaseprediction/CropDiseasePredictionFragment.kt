@@ -8,10 +8,13 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
 import com.project.farmingappss.R
 import com.project.farmingappss.databinding.FragmentCropDiseasePredictionBinding
 import com.project.farmingappss.databinding.LayoutPerstBttmSheetCropBinding
@@ -19,11 +22,15 @@ import com.project.farmingappss.utilities.CAMERA_REQUEST
 import com.project.farmingappss.utilities.CROP_DISEASE
 import com.project.farmingappss.utilities.CROP_NAME
 import com.project.farmingappss.utilities.CROP_REMEDY
+import com.project.farmingappss.utilities.URL
+import com.project.farmingappss.utilities.show
 import com.project.farmingappss.utilities.value
 import com.project.farmingappss.view.plantml.adapter.PagerAdapter
+import com.project.farmingappss.view.plantml.adapter.ViewPagerFragInfo
 import com.project.farmingappss.view.plantml.common.AboutFragment
 import com.project.farmingappss.view.plantml.common.DiseaseFragment
 import com.project.farmingappss.view.plantml.common.Fertilizer
+import com.project.farmingappss.view.yojna.WebViewFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -40,7 +47,6 @@ class CropDiseasePredictionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         startActivityForResult()
     }
 
@@ -64,6 +70,8 @@ class CropDiseasePredictionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.setLifecycleOwner { viewLifecycleOwner.lifecycle }
+        binding.vm = viewModel
 
         binding.ivCapture .setOnClickListener {
             startActivityForResult()
@@ -89,15 +97,18 @@ class CropDiseasePredictionFragment : Fragment() {
     private fun makeApiCalls(bitmap: Bitmap) {
 
         viewModel.getResultsForCropImage( viewModel.imageToBase64(bitmap)) .observe(viewLifecycleOwner, Observer {
-            if (it == null) return@Observer
+            if (it != null) {
+                binding.plantDiseaseTv.text = it.disease.value
 
-            setViewPager(
-                Bundle().apply {
-                    putString(CROP_NAME,    it.plantName.value)
-                    putString(CROP_DISEASE, it.disease.value)
-                    putString(CROP_REMEDY,  it.remedy.value)
-                }
-            )
+                setViewPager(
+                    Bundle().apply {
+                        putString(CROP_NAME, it.plantName.value)
+                        putString(CROP_DISEASE, it.disease.value)
+                        putString(CROP_REMEDY, it.remedy.value)
+                        putString(URL," https://en.wikipedia.org/wiki/${it.disease.value}")
+                    }
+                )
+            }
 
         })
 
@@ -105,20 +116,20 @@ class CropDiseasePredictionFragment : Fragment() {
     }
 
     private fun setViewPager(bundle: Bundle) {
-        val list = listOf<Fragment>(
-            DiseaseFragment.newInstance( bundle ),
-            Fertilizer.newInstance( bundle ),
-            AboutFragment.newInstance( bundle )
+        val list = listOf<ViewPagerFragInfo>(
+            ViewPagerFragInfo(0, Fertilizer.newInstance( bundle ), "Remedy")
+            ,
+            ViewPagerFragInfo(1, WebViewFragment.newInstance( bundle ), "About Disease")
         )
 
         val includedView =  binding.root.findViewById<View>(R.id.bottom_sheet) ?: return
 
-        val bind = LayoutPerstBttmSheetCropBinding.bind(includedView)
+        val pager = includedView.findViewById<ViewPager>(R.id.pager)
+        val tabLayout = includedView.findViewById<TabLayout>(R.id.tab_layout)
 
-        bind.pager.adapter = PagerAdapter(list, childFragmentManager)
+        pager.adapter = PagerAdapter(list, parentFragmentManager)
 
-        bind.tabLayout
-            .setupWithViewPager(bind.pager)
+        tabLayout.setupWithViewPager(pager)
 
 
     }

@@ -7,13 +7,17 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 
 class PagerAdapter(
-    private val fragList: List<Fragment>,
+    private val fragList: List<ViewPagerFragInfo>,
     private val fragmentManager: FragmentManager
 ): FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getCount() = fragList.size
 
     override fun getItem(position: Int) =
-        fragList[position]
+        fragList[position].fragment
+
+    override fun getPageTitle(position: Int): CharSequence? =
+        fragList[position].pageTitle
+
 
 }

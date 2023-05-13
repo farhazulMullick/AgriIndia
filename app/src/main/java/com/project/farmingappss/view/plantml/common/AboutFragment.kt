@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.project.farmingappss.R
 import com.project.farmingappss.utilities.CROP_NAME
+import com.project.farmingappss.utilities.value
 import kotlinx.android.synthetic.main.fragment_about.about_tv
-import kotlinx.android.synthetic.main.layout_perst_bttm_sheet_crop.about
 
 /**
  * A simple [Fragment] subclass.
@@ -28,9 +28,12 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        about_tv.setText( arguments?.getString(CROP_NAME) )
         return inflater.inflate(R.layout.fragment_about, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        about_tv.setText( arguments?.getString(CROP_NAME).value )
     }
 
     companion object {

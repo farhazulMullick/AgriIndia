@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.project.farmingappss.R
 import com.project.farmingappss.utilities.CROP_REMEDY
+import com.project.farmingappss.utilities.value
 import kotlinx.android.synthetic.main.fragment_fertilizer.fertilizer_tv
 
 /**
@@ -30,8 +31,13 @@ class Fertilizer : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        fertilizer_tv.setText( arguments?.getString(CROP_REMEDY) )
+
         return inflater.inflate(R.layout.fragment_fertilizer, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fertilizer_tv.setText( arguments?.getString(CROP_REMEDY) .value)
     }
 
     companion object {

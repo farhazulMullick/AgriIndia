@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.project.farmingappss.R
 import com.project.farmingappss.utilities.CROP_DISEASE
+import com.project.farmingappss.utilities.value
 import kotlinx.android.synthetic.main.fragment_disease.disease_tv
 
 
@@ -22,8 +23,6 @@ class DiseaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
     }
 
     override fun onCreateView(
@@ -31,8 +30,12 @@ class DiseaseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        disease_tv . setText( arguments?.getString(CROP_DISEASE) )
         return inflater.inflate(R.layout.fragment_disease, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        disease_tv . setText( arguments?.getString(CROP_DISEASE).value )
     }
 
     companion object {

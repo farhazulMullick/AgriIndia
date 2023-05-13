@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.project.farmingappss.view.plantml.cropdiseaseprediction.DiseasePredictionViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -69,12 +72,73 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:visibility="@{vm.loading == false ? View.VISIBLE : View.GONE}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/img_card"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:weightSum="2"
+                android:paddingHorizontal="32dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/disease_lable"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:textStyle="bold"
+                    android:gravity="end"
+                    android:text="Disease"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/plant_disease_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/img_card"
+                    app:layout_constraintStart_toEndOf="@id/disease_lable"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:textStyle="normal"
+                    android:gravity="start"
+                    tools:text="ABC"/>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <RelativeLayout
+            android:background="@android:drawable/screen_background_dark_transparent"
+            android:visibility="@{vm.loading == true ? View.VISIBLE : View.GONE}"
+            android:id="@+id/loading_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progressTint="@color/greenDark"
+                android:indeterminate="true"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="280dp"/>
+
+        </RelativeLayout>
 
         <include
             android:id="@+id/bottom_sheet"
             layout="@layout/layout_perst_bttm_sheet_crop" />
+
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

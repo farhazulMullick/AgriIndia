@@ -14,6 +14,7 @@ import com.project.farmingappss.R
 import com.project.farmingappss.adapter.YojnaAdapter
 import com.project.farmingappss.databinding.FragmentYojnaListBinding
 import com.project.farmingappss.utilities.CellClickListener
+import com.project.farmingappss.utilities.URL
 import com.project.farmingappss.viewmodel.YojnaViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -100,7 +101,7 @@ class YojnaListFragment : Fragment(), CellClickListener<DocumentSnapshot> {
     override fun onCellClickListener(data: DocumentSnapshot) {
         if (data.get("link") == null || data.data == null) return
 
-        webViewFragment = WebViewFragment.newInstance(data.data!!["link"].toString())
+        webViewFragment = WebViewFragment.newInstance(Bundle().apply { putString(URL, data.data!!["link"].toString()) })
         activity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(R.id.frame_layout, webViewFragment, WebViewFragment::class.java.simpleName)

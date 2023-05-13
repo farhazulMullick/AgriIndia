@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import com.project.farmingappss.R
-import com.project.farmingappss.utilities.YOJNA_URL
+import com.project.farmingappss.utilities.URL
 import com.project.farmingappss.viewmodel.YojnaViewModel
 import kotlinx.android.synthetic.main.fragment_yojna.*
 
@@ -40,12 +40,11 @@ class WebViewFragment : Fragment() {
     }
 
     companion object {
+
         @JvmStatic
-        fun newInstance(url: String) =
+        fun newInstance(bundle: Bundle) =
             WebViewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(YOJNA_URL, url)
-                }
+                arguments = bundle
             }
     }
 
@@ -53,10 +52,10 @@ class WebViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.apply {
-            val yojnaUrl = this.getString(YOJNA_URL)
+            val url = this.getString(URL)
             yojnaWebView.apply {
                 webViewClient = WebViewClient()
-                loadUrl(yojnaUrl)
+                loadUrl(url)
             }
         }
     }
