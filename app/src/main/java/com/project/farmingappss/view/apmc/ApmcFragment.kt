@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.farmingappss.R
 import com.project.farmingappss.adapter.ApmcAdapter
-import com.project.farmingappss.model.APMCApi
+import com.project.farmingappss.model.AgriRetrofitFactory
 import com.project.farmingappss.model.data.APMCCustomRecords
 import com.project.farmingappss.model.data.APMCMain
 import kotlinx.android.synthetic.main.fragment_apmc.*
@@ -472,11 +472,11 @@ class ApmcFragment : Fragment() {
     }
 
     private fun getApmc(district: String) {
-        val apmc1: Call<APMCMain> = APMCApi.apmcInstances.getapmc(20)
+        val apmc1: Call<APMCMain> = AgriRetrofitFactory.apmcInstances.getapmc(20)
         var apmc2: Call<APMCMain>? = null
         if (indexSpinner2 != 0) {
 
-            apmc2 = APMCApi.apmcInstances.getSomeData(district)
+            apmc2 = AgriRetrofitFactory.apmcInstances.getSomeData(district)
             Log.d("APMC District", district)
 
             apmc2!!.enqueue(object : Callback<APMCMain> {

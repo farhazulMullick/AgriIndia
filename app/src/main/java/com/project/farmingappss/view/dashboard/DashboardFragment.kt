@@ -1,5 +1,6 @@
 package com.project.farmingappss.view.dashboard
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -16,10 +17,13 @@ import com.bumptech.glide.Glide
 import com.project.farmingappss.R
 import com.project.farmingappss.adapter.DashboardEcomItemAdapter
 import com.project.farmingappss.model.data.WeatherRootList
+import com.project.farmingappss.utilities.ACTION_TYPE
+import com.project.farmingappss.utilities.CROP_DISEASE_PREDICTION_SCREEN
 import com.project.farmingappss.utilities.CellClickListener
 import com.project.farmingappss.view.articles.ArticleListFragment
 import com.project.farmingappss.view.articles.FruitsFragment
 import com.project.farmingappss.view.ecommerce.EcommerceItemFragment
+import com.project.farmingappss.view.plantml.MLBaseActivity
 import com.project.farmingappss.view.weather.WeatherFragment
 import com.project.farmingappss.view.yojna.YojnaListFragment
 import com.project.farmingappss.viewmodel.EcommViewModel
@@ -157,6 +161,13 @@ class dashboardFragment : Fragment(), CellClickListener<String> {
                 .setReorderingAllowed(true)
                 .addToBackStack("yojnaListFrag")
                 .commit()
+        }
+
+        btn_crop_disease.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), MLBaseActivity::class.java)
+                    .apply { putExtra(ACTION_TYPE, CROP_DISEASE_PREDICTION_SCREEN) }
+            )
         }
 
 //        cat5.setOnClickListener {

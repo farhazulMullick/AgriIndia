@@ -3,8 +3,7 @@
     package="com.project.farmingappss">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -14,10 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.introscreen.IntroActivity"
-            android:theme="@style/AppTheme2">
-
-        </activity>
+        <activity
+            android:name=".view.plantml.MLBaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.introscreen.IntroActivity"
+            android:theme="@style/AppTheme2"></activity>
         <activity android:name=".view.ecommerce.RazorPayActivity" />
         <activity android:name=".view.dashboard.DashboardActivity">
             <intent-filter>
@@ -33,9 +34,7 @@
         <activity
             android:name=".view.auth.LoginActivity"
             android:noHistory="true"
-            android:theme="@style/AppTheme2">
-
-        </activity>
+            android:theme="@style/AppTheme2"></activity>
 
         <meta-data
             android:name="com.razorpay.ApiKey"
