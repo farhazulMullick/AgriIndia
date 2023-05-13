@@ -10,13 +10,13 @@ data class Image(
 
 data class SusyaDetectionResponse(
     @SerializedName("disease")
-    val _disease: String? = null,
+    private val _disease: String? = null,
 
     @SerializedName("remedy")
-    val _remedy : String? = null,
+    private val _remedy : String? = null,
 
     @SerializedName ("plant")
-    val _plantName: String? = null
+    private val _plantName: String? = null
 ) {
     val disease: String get() = _disease.value
     val remedy : String get() = _remedy.value

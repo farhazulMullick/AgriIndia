@@ -13,6 +13,7 @@ class PagerAdapter(
 
     override fun getCount() = fragList.size
 
-    override fun getItem(position: Int) = fragList[position]
+    override fun getItem(position: Int) =
+        fragList[position]
 
 }

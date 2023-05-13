@@ -39,7 +39,7 @@
                         android:id="@+id/iv_crop"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/rzp_green_button"/>
                 </com.google.android.material.card.MaterialCardView>
 

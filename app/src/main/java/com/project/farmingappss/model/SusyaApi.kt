@@ -12,7 +12,7 @@ import retrofit2.http.POST
 
 interface SusyaApi {
 
-    @POST()
+    @POST(".")
     suspend fun sendBase64Img(
         @Body image: Image
     ): Response<SusyaDetectionResponse>?

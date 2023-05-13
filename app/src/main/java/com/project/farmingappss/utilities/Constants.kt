@@ -11,3 +11,6 @@ const val CROP_DISEASE_PREDICTION_SCREEN = "crop_disease_prediction"
 
 // Crop Prediction
 const val CROP_PREDICTION = "crop_prediction"
+const val CROP_NAME = "crop_name"
+const val CROP_REMEDY = "crop_remedy"
+const val CROP_DISEASE = "crop_disease"

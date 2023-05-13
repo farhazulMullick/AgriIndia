@@ -1,6 +1,8 @@
 package com.project.farmingappss.view.plantml.cropdiseaseprediction
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -8,12 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.project.farmingappss.R
 import com.project.farmingappss.databinding.FragmentCropDiseasePredictionBinding
 import com.project.farmingappss.databinding.LayoutPerstBttmSheetCropBinding
 import com.project.farmingappss.utilities.CAMERA_REQUEST
-import com.project.farmingappss.utilities.Empty
+import com.project.farmingappss.utilities.CROP_DISEASE
+import com.project.farmingappss.utilities.CROP_NAME
+import com.project.farmingappss.utilities.CROP_REMEDY
+import com.project.farmingappss.utilities.value
 import com.project.farmingappss.view.plantml.adapter.PagerAdapter
 import com.project.farmingappss.view.plantml.common.AboutFragment
 import com.project.farmingappss.view.plantml.common.DiseaseFragment
@@ -41,8 +47,8 @@ class CropDiseasePredictionFragment : Fragment() {
     private fun startActivityForResult (){
         activity?.run {
             startActivityForResult(
-                Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
-                }, CAMERA_REQUEST
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE),
+                CAMERA_REQUEST
             )
         }
     }
@@ -65,23 +71,44 @@ class CropDiseasePredictionFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != Activity.RESULT_OK || data == null) return
         when (requestCode) {
-            CAMERA_REQUEST -> {
-                makeApiCalls()
+            CAMERA_REQUEST-> {
+                val imageBitmap = data.extras?.get("data") as? Bitmap ?: return
+                showPreview (imageBitmap)
+                makeApiCalls(imageBitmap)
             }
         }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun makeApiCalls () {
-        setViewPager()
+    private fun showPreview (bitmap: Bitmap) {
+        Glide.with(this).load(bitmap).into(binding.ivCrop)
     }
 
-    private fun setViewPager() {
+    private fun makeApiCalls(bitmap: Bitmap) {
+
+        viewModel.getResultsForCropImage( viewModel.imageToBase64(bitmap)) .observe(viewLifecycleOwner, Observer {
+            if (it == null) return@Observer
+
+            setViewPager(
+                Bundle().apply {
+                    putString(CROP_NAME,    it.plantName.value)
+                    putString(CROP_DISEASE, it.disease.value)
+                    putString(CROP_REMEDY,  it.remedy.value)
+                }
+            )
+
+        })
+
+
+    }
+
+    private fun setViewPager(bundle: Bundle) {
         val list = listOf<Fragment>(
-            DiseaseFragment.newInstance(String.Empty, String.Empty),
-            Fertilizer.newInstance(String.Empty, String.Empty),
-            AboutFragment.newInstance(String.Empty,String.Empty)
+            DiseaseFragment.newInstance( bundle ),
+            Fertilizer.newInstance( bundle ),
+            AboutFragment.newInstance( bundle )
         )
 
         val includedView =  binding.root.findViewById<View>(R.id.bottom_sheet) ?: return

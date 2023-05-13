@@ -6,6 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.project.farmingappss.R
+import com.project.farmingappss.utilities.CROP_NAME
+import kotlinx.android.synthetic.main.fragment_about.about_tv
+import kotlinx.android.synthetic.main.layout_perst_bttm_sheet_crop.about
+
 /**
  * A simple [Fragment] subclass.
  * Use the [AboutFragment.newInstance] factory method to
@@ -24,24 +28,17 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        about_tv.setText( arguments?.getString(CROP_NAME) )
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AboutFragment.
-         */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(bundle: Bundle) =
             AboutFragment().apply {
-                arguments = Bundle().apply {
-                }
+                arguments = bundle
             }
     }
 }
