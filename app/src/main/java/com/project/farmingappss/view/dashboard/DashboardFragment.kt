@@ -19,6 +19,7 @@ import com.project.farmingappss.adapter.DashboardEcomItemAdapter
 import com.project.farmingappss.model.data.WeatherRootList
 import com.project.farmingappss.utilities.ACTION_TYPE
 import com.project.farmingappss.utilities.CROP_DISEASE_PREDICTION_SCREEN
+import com.project.farmingappss.utilities.CROP_PREDICTION
 import com.project.farmingappss.utilities.CellClickListener
 import com.project.farmingappss.view.articles.ArticleListFragment
 import com.project.farmingappss.view.articles.FruitsFragment
@@ -170,16 +171,12 @@ class dashboardFragment : Fragment(), CellClickListener<String> {
             )
         }
 
-//        cat5.setOnClickListener {
-//            articleListFragment = ArticleListFragment()
-//            val transaction = activity!!.supportFragmentManager
-//                .beginTransaction()
-//                .replace(R.id.frame_layout, articleListFragment, "articlesListFrag")
-//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                .setReorderingAllowed(true)
-//                .addToBackStack("articlesListFrag")
-//                .commit()
-//        }
+        btn_crop_prediction.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), MLBaseActivity::class.java)
+                    .apply { putExtra(ACTION_TYPE, CROP_PREDICTION) }
+            )
+        }
     }
 
     companion object {
