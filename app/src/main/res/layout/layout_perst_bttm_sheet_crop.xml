@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         app:behavior_peekHeight="300dp"
         app:behavior_hideable="false"
+        android:background="@drawable/rounded_bg_bottom_sheet"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
         <com.google.android.material.tabs.TabLayout

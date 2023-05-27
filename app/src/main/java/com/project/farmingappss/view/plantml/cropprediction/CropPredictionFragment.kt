@@ -10,8 +10,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import com.project.farmingappss.R
+import com.project.farmingappss.databinding.FragmentCropPredictionBinding
 import com.project.farmingappss.utilities.URL
 import com.project.farmingappss.utilities.value
 import com.project.farmingappss.view.plantml.adapter.PagerAdapter
@@ -39,31 +41,43 @@ class CropPredictionFragment : Fragment() {
 
     private lateinit var includedView: View
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
+    private lateinit var sheetBehavior: BottomSheetBehavior<View>
+
+    private var _binding: FragmentCropPredictionBinding? = null
+    private val binding get() =  _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding  = FragmentCropPredictionBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_crop_prediction, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.vm = viewModel
 
+        includedView =  view.findViewById(R.id.bottom_sheet) ?: return
+        sheetBehavior = BottomSheetBehavior.from(includedView)
 
-
-        includedView =  view.findViewById<View>(R.id.bottom_sheet) ?: return
-        val bottomSheet = includedView.findViewById<ConstraintLayout>(R.id.cnt_root)
+        sheetBehavior.peekHeight = 0
+        sheetBehavior.isHideable = true
 
         predict_btn.setOnClickListener {
             handlePredictBtnClick()
         }
+
+        sheetBehavior.setBottomSheetCallback( object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+
+        })
 
     }
 
@@ -104,15 +118,17 @@ class CropPredictionFragment : Fragment() {
                 return@Observer
             }
 
+            sheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            sheetBehavior.peekHeight = 900
             setViewPager(Bundle().apply {
                 putString(URL, "https://en.wikipedia.org/wiki/${it.crop.value}")
-            })
+            }, it.crop.value)
         })
     }
 
-    private fun setViewPager(bundle: Bundle) {
+    private fun setViewPager(bundle: Bundle, cropName: String) {
         val list = listOf(
-            ViewPagerFragInfo(1, WebViewFragment.newInstance( bundle ), "Suggested Crop")
+            ViewPagerFragInfo(1, WebViewFragment.newInstance( bundle ), cropName)
         )
 
         val pager = includedView.findViewById<ViewPager>(R.id.pager)
